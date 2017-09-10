@@ -191,9 +191,11 @@ def groovy_binary(name, main_class, srcs=[], testonly=0, deps=[], **kwargs):
   )
 
 def path_to_class(path):
-  if path.startswith("src/test/groovy/"):
+  if "src/test/groovy/" in path:
+    path = path[path.find("src/test/groovy/"):]
     return path[len("src/test/groovy/") : path.index(".groovy")].replace('/', '.')
-  elif path.startswith("src/test/java/"):
+  elif "src/test/java/" in path:
+    path = path[path.find("src/test/java/"):]
     return path[len("src/test/java/") : path.index(".groovy")].replace('/', '.')
   else:
     fail("groovy_test sources must be under src/test/java or src/test/groovy")
